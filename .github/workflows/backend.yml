@@ -58,4 +58,4 @@ jobs:
         run: aws eks update-kubeconfig --name bc-devops
 
       - name: Deploy to EKS cluster
-        run: kubectl set image deployment/${{ matrix.directory }}-deployment bcdevops-backend-${{ matrix.directory }}-image=ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
+        run: kubectl set image deployment/${{ matrix.directory }}-deployment bcdevops-backend-${{ matrix.directory }}=ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
