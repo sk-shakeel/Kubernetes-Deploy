@@ -19,8 +19,6 @@ jobs:
     defaults:
       run:
         working-directory: backend/${{ matrix.directory }}
-    env:
-      imageTag: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
 
     steps:
       - name: Checkout Repository
@@ -45,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ imageTag }}
+          tags: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
           context: backend/${{ matrix.directory }}
 
       - name: Configure AWS Credentials
@@ -59,4 +57,4 @@ jobs:
         run: aws eks update-kubeconfig --name bootcampdevops
 
       - name: Deploy to EKS cluster
-        run: kubectl set image deployment/${{ matrix.directory }}-deploy api-gateway-image=$imageTag
+        run: kubectl set image deployment/${{ matrix.directory }}-deploy ${{ matrix.directory }}-image=ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
