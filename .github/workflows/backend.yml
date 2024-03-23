@@ -1,0 +1,62 @@
+name: Backend CICD for BC-devops
+run-name: Backend deployment triggered by ${{ github.actor }}.
+
+on:
+  push:
+    branches:
+      - deployment
+    paths:
+      - "backend/**"
+      - ".github/workflows/backend.yml"
+
+jobs:
+  backend-deploy:
+    name: Backend CICD
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        directory: [service-registry, cloud-gateway, address-service, appointment-service, card-service, lab-service, patient-service, test-lab-service, test-service, user-service]
+    defaults:
+      run:
+        working-directory: backend/${{ matrix.directory }}
+    env:
+      imageTag: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Build with Maven
+        run: mvn clean install -DskipTests -Dsonar.skip=true
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+         registry: ghcr.io
+         username: ${{ secrets.GHCR_USER }}
+         password: ${{ secrets.GHCR_PWD }}
+
+      - name: Build the backend image and push it to GHCR
+        uses: docker/build-push-action@v2
+        with:
+          push: true
+          tags: ${{ imageTag }}
+          context: backend/${{ matrix.directory }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-2
+
+      - name: update kube Config file
+        run: aws eks update-kubeconfig --name bootcampdevops
+
+      - name: Deploy to EKS cluster
+        run: kubectl set image deployment/${{ matrix.directory }}-deploy api-gateway-image=$imageTag

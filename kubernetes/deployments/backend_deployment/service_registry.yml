@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: service-registry-deployment
+   labels:
+      type: BED-SR
+spec:
+  template:
+    metadata:
+      name: service-registry-pod
+      labels:
+        type: service-registry
+    spec:
+      containers:
+      - name: bcdevops-backend-service-registry
+        image: ghcr.io/sk-shakeel/bcdevops-backend-service-registry:latest
+        ports:
+        - containerPort: 8761
+      imagePullSecrets: 
+      - name: ghcr-secret
+
+  replicas: 1
+  selector:
+    matchLabels:
+      type: service-registry
