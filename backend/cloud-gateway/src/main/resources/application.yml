@@ -1,0 +1,65 @@
+server:
+  port: 9191
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: LAB-SERVICE
+          uri: lb://LAB-SERVICE
+          predicates:
+            - Path=/labs/**
+
+        - id: CARD-SERVICE
+          uri: lb://CARD-SERVICE
+          predicates:
+            - Path=/cards/**
+
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+
+        - id: ADDRESS-SERVICE
+          uri: lb://ADDRESS-SERVICE
+          predicates:
+            - Path=/address/**
+
+        - id: APPOINTMENT-SERVICE
+          uri: lb://APPOINTMENT-SERVICE
+          predicates:
+            - Path=/appointments/**
+
+        - id: TEST-SERVICE
+          uri: lb://TEST-SERVICE
+          predicates:
+            - Path=/tests/**
+
+        - id: PATIENT-SERVICE
+          uri: lb://PATIENT-SERVICE
+          predicates:
+            - Path=/patients/** 
+
+        - id: TEST-LAB-SERVICE
+          uri: lb://TEST-LAB-SERVICE
+          predicates:
+            - Path=/testlabs/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: https://auth0-backend.spcluster.tk/eureka/
+  instance:
+    hostname: cloud-gateway

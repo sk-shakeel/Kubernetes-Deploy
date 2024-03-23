@@ -1,0 +1,77 @@
+{
+  "users": [
+      {
+          "id": "1",
+          "username": "Arifa Shaik",
+          "email": "shaik.arifa@zemosolabs.com"
+      },
+      {
+          "id": "2",
+          "username": "sai@gmail.com",
+          "email": "sai@gmail.com"
+      },
+      {
+          "id": "3",
+          "username": "avinash@gmail.com",
+          "email": "avinash@gmail.com"
+      },
+      {
+          "id": "4",
+          "username": "rithika@gmail.com",
+          "email": "rithika@gmail.com"
+      }
+  ],
+  "labs": [
+      {
+          "id": 1,
+          "name": "Los Altos Center Lab",
+          "rating": 4.3,
+          "availableSlots": 4,
+          "reportTime": "24 hrs",
+          "amount": 1200,
+          "noOfTest": 1
+      },
+      {
+          "id": 2,
+          "name": "Los Altos Center Lab",
+          "rating": 4.3,
+          "availableSlots": 4,
+          "reportTime": "24 hrs",
+          "amount": 1200,
+          "noOfTest": 1
+      }
+  ],
+  "patients": [
+      {
+          "id": 1,
+          "user_id": 1,
+          "relation": "Self",
+          "name": "Arifa",
+          "age": 21,
+          "gender": "Female"
+      }
+  ],
+  "address": [
+      {
+          "id": 1,
+          "user_id": 1,
+          "house_no": "Bhoodevi Nagar",
+          "area": "Alwal",
+          "zipcode": "500015",
+          "city": "Hyderabad, Telengana",
+          "isSelected": false
+      }
+  ],
+  "appointments": [
+      {
+          "id": 1,
+          "month": "january",
+          "date": 23,
+          "day": "Wednesday",
+          "time": "7.00 pm to 8.00 pm",
+          "user_id": 1,
+          "patient_id": 1,
+          "address": "kokatpally,Hyderabad"
+      }
+  ]
+}

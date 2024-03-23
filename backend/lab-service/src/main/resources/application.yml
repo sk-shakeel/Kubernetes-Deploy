@@ -1,0 +1,15 @@
+server:
+  port: 9004
+
+spring:
+  application:
+    name: LAB-SERVICE
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone:  https://serviceregistry.bc61.tk/eureka/
+  instance:
+    hostname: lab-service

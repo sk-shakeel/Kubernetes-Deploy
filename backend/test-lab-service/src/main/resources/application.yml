@@ -1,0 +1,15 @@
+server:
+  port: 9006
+
+spring:
+  application:
+    name: TEST-LAB-SERVICE
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: https://auth0-backend.spcluster.tk/eureka/
+  instance:
+    hostname: test-lab-service

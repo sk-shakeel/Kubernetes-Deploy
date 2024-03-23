@@ -1,0 +1,15 @@
+server:
+  port: 9007
+
+spring:
+  application:
+    name: TEST-SERVICE
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: https://auth0-backend.spcluster.tk/eureka/
+  instance:
+    hostname: test-service

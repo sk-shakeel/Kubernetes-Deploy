@@ -1,0 +1,14 @@
+package com.zemoso.diagnostics.vo;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class ResponseTemplateVO {
+    private LabVO lab;
+    private TestVO test;
+}
