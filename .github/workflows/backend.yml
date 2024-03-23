@@ -54,7 +54,7 @@ jobs:
           aws-region: us-east-2
 
       - name: update kube Config file
-        run: aws eks update-kubeconfig --name bootcampdevops
+        run: aws eks update-kubeconfig --name bc-devops
 
       - name: Deploy to EKS cluster
         run: kubectl set image deployment/${{ matrix.directory }}-deploy ${{ matrix.directory }}-image=ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-backend-${{ matrix.directory }}:${{ github.run_number }}

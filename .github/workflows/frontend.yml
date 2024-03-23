@@ -58,7 +58,7 @@ jobs:
           aws-region: eu-north-1
 
       - name: update kube Config file
-        run: aws eks update-kubeconfig --name bootcampdevops
+        run: aws eks update-kubeconfig --name bc-devops
 
       - name: Deploy to EKS cluster
         env:
