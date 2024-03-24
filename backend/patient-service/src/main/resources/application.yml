@@ -10,6 +10,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: https://auth0-backend.spcluster.tk/eureka/
+      defaultZone: http://localhost:8761/eureka/
   instance:
     hostname: patient-service
