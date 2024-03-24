@@ -60,6 +60,6 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://aeb10002b6a5b43879d787cee1fa80c1-180964318.us-east-2.elb.amazonaws.com
+      defaultZone: http://localhost:8761/eureka
   instance:
     hostname: cloud-gateway
