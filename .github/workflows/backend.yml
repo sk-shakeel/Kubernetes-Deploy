@@ -15,8 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        directory: [service-registry]
-        # , cloud-gateway, address-service, appointment-service, card-service, lab-service, patient-service, test-lab-service, test-service, user-service
+        directory: [service-registry,cloud-gateway]
+        # , address-service, appointment-service, card-service, lab-service, patient-service, test-lab-service, test-service, user-service
     defaults:
       run:
         working-directory: backend/${{ matrix.directory }}
