@@ -37,32 +37,32 @@ function App() {
       (
         <BrowserRouter>
           <Routes>
-            <Route path="/addaddress" element={<AddressFormPage />} />
-            <Route path="/selectaddress" element={<SelectAddressPage />} />
+            <Route path="/fe/addaddress" element={<AddressFormPage />} />
+            <Route path="/fe/selectaddress" element={<SelectAddressPage />} />
             <Route
-              path="/verify"
+              path="/fe/verify"
               element={<OTPVerificationPage username={userName(user)} />}
             />
-           <Route path="/account" element={<AccountPage  />} />
+           <Route path="/fe/account" element={<AccountPage  />} />
 
-            <Route path="/appointments" element={<AppointmentPage />} />
-            <Route path="/covid" element={<CovidInfoPage />} />
-            <Route path="/selectpatient" element={<SelectPatientPage />} />
-            <Route path="/revieworder" element={<ReviewOrderPage />} />
-            <Route path="/trackorder" element={<TrackOrderPage />} />
-            <Route path="/orderplaced" element={<OrderPlacedPage />}></Route>
-            <Route path="/addpatients" element={<PatientFormPage />}></Route>
+            <Route path="/fe/appointments" element={<AppointmentPage />} />
+            <Route path="/fe/covid" element={<CovidInfoPage />} />
+            <Route path="/fe/selectpatient" element={<SelectPatientPage />} />
+            <Route path="/fe/revieworder" element={<ReviewOrderPage />} />
+            <Route path="/fe/trackorder" element={<TrackOrderPage />} />
+            <Route path="/fe/orderplaced" element={<OrderPlacedPage />}></Route>
+            <Route path="/fe/addpatients" element={<PatientFormPage />}></Route>
 
-            <Route path="/checkout" element={<CheckoutPage />}></Route>
-            <Route path="/home" element={<HomePage />}></Route>
-            <Route path="/selectlab" element={<LabSelectionPage />}></Route>
-            <Route path="/setdate" element={<SelectAppointment />}></Route>
+            <Route path="/fe/checkout" element={<CheckoutPage />}></Route>
+            <Route path="/fe/home" element={<HomePage />}></Route>
+            <Route path="/fe/selectlab" element={<LabSelectionPage />}></Route>
+            <Route path="/fe/setdate" element={<SelectAppointment />}></Route>
             <Route
-              path="/"
+              path="/fe"
               element={<MobileNumberVerificationPage />}
             />
-            <Route path="/reports" element={<ReportsPage />} />
-            <Route path="/appointment" element={<SelectAppointment />} />
+            <Route path="/fe/reports" element={<ReportsPage />} />
+            <Route path="/fe/appointment" element={<SelectAppointment />} />
           </Routes>
         </BrowserRouter>
       )} 
