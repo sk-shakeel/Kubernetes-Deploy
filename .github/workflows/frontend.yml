@@ -1,0 +1,70 @@
+name: CI/CD for the bootcamp-devops-frontend
+run-name: Frontend deployment triggered by ${{ github.actor }}.
+
+on:
+  push:
+    branches:
+      - deployment
+    paths:
+      - frontend/**
+      - .github/workflows/frontend.yml
+
+jobs:
+  build_and_deploy:
+     runs-on: ubuntu-latest
+     timeout-minutes: 10
+     defaults:
+       run:
+         working-directory: frontend
+
+     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Cache dependencies of node-modules
+        uses: actions/cache@v2
+        with:
+          path: frontend/node_modules
+          key: ${{ runner.os }}-npmbcdevops-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npmbcdevops-
+
+      - name: install dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+        run: npm install --legacy-peer-deps
+
+      - name: run build
+        run: npm run build
+      
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+         registry: ghcr.io
+         username: ${{ secrets.GHCR_USER }}
+         password: ${{ secrets.GHCR_PWD }}
+
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./frontend
+          push: true
+          tags: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-frontend:${{ github.run_number }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY}}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: us-east-2
+
+      - name: update kube Config file
+        run: aws eks update-kubeconfig --name bc-devops
+
+      - name: Deploy to EKS cluster
+        env:
+          imageTag: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-frontend:${{ github.run_number }}
+        run: |
+         kubectl set image deployment/frontend-deployment bcdevops-frontend=$imageTag
+         
+
+      

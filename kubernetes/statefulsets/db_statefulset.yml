@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+   name: mysql-sts
+   labels:
+      type: mysql-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: mysql
+  serviceName: mysql-svc
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        type: mysql
+    spec:
+      containers:
+      - name: mysql-image
+        image: mysql:latest
+        ports:
+        - containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: database-secret
+                key: password
+        volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-volume
+      volumes:
+         - name: mysql-volume
+           persistentVolumeClaim:
+             claimName: pvc-bcdevops
+
+  

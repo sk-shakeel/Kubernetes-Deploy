@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: frontend-deployment
+   labels:
+      type: FED
+spec:
+  template:
+    metadata:
+      name: frontend-pod
+      labels:
+        type: FE-pod
+    spec:
+      containers:
+      - name: bcdevops-frontend
+        image: ghcr.io/sk-shakeel/bcdevops-frontend:latest
+        ports:
+        - containerPort: 80
+      imagePullSecrets: 
+      - name: ghcr-secret
+
+  replicas: 1
+  selector:
+    matchLabels:
+      type: FE-pod
