@@ -55,7 +55,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY}}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: eu-north-1
+          aws-region: us-east-2
 
       - name: update kube Config file
         run: aws eks update-kubeconfig --name bc-devops
@@ -64,7 +64,7 @@ jobs:
         env:
           imageTag: ghcr.io/${{ secrets.GHCR_USER }}/bcdevops-frontend:${{ github.run_number }}
         run: |
-         kubectl set image deployment/frontend-deploy frontend-image=$imageTag
+         kubectl set image deployment/frontend-deployment bcdevops-frontend=$imageTag
          
 
       
